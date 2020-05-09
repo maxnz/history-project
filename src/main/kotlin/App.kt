@@ -1,17 +1,20 @@
-
 import imports.DropdownButton
 import imports.DropdownItem
 import kotlinx.css.*
+import kotlinx.html.js.onClickFunction
+import pages.Home
 import react.*
+import react.dom.button
 import react.dom.div
 import styled.css
+import styled.styledDiv
 import styled.styledP
 
 class App : RComponent<RProps, AppState>() {
     private fun RBuilder.navBarDropdown(pageGroup: PageGroup): ReactElement =
         DropdownButton {
             attrs {
-                title = pageGroup.title
+                title = pageGroup.toString()
             }
             for (subPage in pageGroup.pages) {
                 DropdownItem {
@@ -45,17 +48,34 @@ class App : RComponent<RProps, AppState>() {
         }
 
         // Navigation bar
-        navBarDropdown(PageGroup.YRS_1940_1944)
+        styledDiv {
+            css {
+                display = Display.flex
+                flexDirection = FlexDirection.row
+                backgroundColor = Color("#007bff")
+            }
+            button {
+                attrs["class"] = "btn btn-primary"
+                attrs {
+                    onClickFunction = {
+                        setState {
+                            page = Home
+                        }
+                    }
+                }
+                +"Home"
+            }
+            for (group in PageGroup.values())
+                navBarDropdown(group)
+//            navBarDropdown(PageGroup.YRS_1940_1944)
+//            navBarDropdown(PageGroup.YRS_1945_1949)
+        }
 
         // Page
         div {
-            when (state.page) {
-                null -> {
-                }
-                else -> {
-                    child(state.page!!.component) {}
-                }
-            }
+            if (state.page == null)
+                state.page = Home
+            child(state.page!!::class) {}
         }
     }
 }

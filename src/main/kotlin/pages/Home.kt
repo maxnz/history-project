@@ -1,11 +1,11 @@
 package pages
 
-import AppState
+import Page
 import react.RBuilder
-import react.RComponent
-import react.RProps
 
-class Home : RComponent<RProps, AppState>() {
+object Home : Page() {
+    override val title = "Home"
     override fun RBuilder.render() {
+        +"Hi"
     }
 }

@@ -1,13 +1,12 @@
 package pages
 
+import Page
 import react.RBuilder
-import react.RComponent
-import react.RProps
-import react.RState
 import react.dom.h1
 import react.dom.img
 
-class Kindertransport : RComponent<RProps, RState>() {
+object Kindertransport : Page() {
+    override val title = "Kindertransport (Child Transport)"
     override fun RBuilder.render() {
         h1 {
             +"Kindertransport"
