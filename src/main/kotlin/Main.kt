@@ -11,7 +11,7 @@ fun main() {
     render(document.getElementById("root")) {
         styledDiv {
             css {
-                height = LinearDimension("100%")
+                height = LinearDimension.fillAvailable
                 width = LinearDimension.fillAvailable
             }
             child(App::class) {}

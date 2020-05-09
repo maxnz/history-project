@@ -10,9 +10,6 @@ import react.RProps
 @JsName("DropdownButton")
 external val DropdownButton: RClass<DropdownButtonProps>
 
-@JsName("DropdownMenu")
-external val DropdownMenu: RClass<dynamic>
-
 @JsName("DropdownItem")
 external val DropdownItem: RClass<DropdownItemProps>
 

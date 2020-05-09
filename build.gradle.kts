@@ -25,8 +25,8 @@ dependencies {
 
     implementation(npm("react-player"))
 
-    implementation(npm("react-share"))
     implementation(npm("react-bootstrap"))
+    implementation(npm("react-scroll"))
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:1.3.5")
 }

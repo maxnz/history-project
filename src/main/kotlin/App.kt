@@ -1,43 +1,23 @@
-import imports.DropdownButton
-import imports.DropdownItem
+
 import kotlinx.css.*
-import kotlinx.html.js.onClickFunction
 import pages.Home
-import react.*
-import react.dom.button
-import react.dom.div
+import pages.pageutils.addSideNavigation
+import pages.pageutils.addTopNavigation
+import react.RBuilder
+import react.RComponent
+import react.RProps
 import styled.css
 import styled.styledDiv
 import styled.styledP
 
 class App : RComponent<RProps, AppState>() {
-    private fun RBuilder.navBarDropdown(pageGroup: PageGroup): ReactElement =
-        DropdownButton {
-            attrs {
-                title = pageGroup.toString()
-            }
-            for (subPage in pageGroup.pages) {
-                DropdownItem {
-                    attrs {
-                        `as` = "button"
-                        onClick = {
-                            setState {
-                                page = subPage
-                            }
-                        }
-                    }
-                    +subPage.title
-                }
-            }
-        }
+
 
     override fun RBuilder.render() {
-        child(Header::class) {}
+        // Title
         styledP {
             css {
-                backgroundColor = Color.gray
-                borderTopLeftRadius = LinearDimension("0.5cm")
-                borderTopRightRadius = LinearDimension("0.5cm")
+                background = "linear-gradient(rgba(255, 255, 255, 1), #007bff)"
                 fontFamily = FONT
                 fontSize = LinearDimension("2.5cm")
                 marginBottom = LinearDimension("0")
@@ -48,34 +28,27 @@ class App : RComponent<RProps, AppState>() {
         }
 
         // Navigation bar
+        addTopNavigation(this@App)
+
+        // Page
         styledDiv {
+            val page = state.page ?: Home
+
             css {
                 display = Display.flex
                 flexDirection = FlexDirection.row
-                backgroundColor = Color("#007bff")
             }
-            button {
-                attrs["class"] = "btn btn-primary"
-                attrs {
-                    onClickFunction = {
-                        setState {
-                            page = Home
-                        }
-                    }
-                }
-                +"Home"
-            }
-            for (group in PageGroup.values())
-                navBarDropdown(group)
-//            navBarDropdown(PageGroup.YRS_1940_1944)
-//            navBarDropdown(PageGroup.YRS_1945_1949)
-        }
 
-        // Page
-        div {
-            if (state.page == null)
-                state.page = Home
-            child(state.page!!::class) {}
+            // Page Side Navigation
+            addSideNavigation(page)
+
+            // Page Content
+            styledDiv {
+                css {
+                    display = Display.block
+                }
+                child(page::class) {}
+            }
         }
     }
 }
