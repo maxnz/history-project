@@ -59,23 +59,25 @@ fun RBuilder.addTopNavigation(app: App): ReactElement =
             navBarDropdown(group, app)
     }
 
-fun RBuilder.addSideNavigation(page: Page): ReactElement =
-    styledDiv {
-        css {
-            display = Display.flex
-            flexDirection = FlexDirection.column
-            width = LinearDimension("15%")
-        }
-        ul {
-            for (navOpt in page.navigationOptions)
-                li {
-                    Link {
-                        attrs {
-                            to = navOpt.destination
-                            smooth = true
+fun RBuilder.addSideNavigation(page: Page): ReactElement? =
+    if (page.navigationOptions.isNotEmpty())
+        styledDiv {
+            css {
+                display = Display.flex
+                flexDirection = FlexDirection.column
+                width = LinearDimension("15%")
+            }
+            ul {
+                for (navOpt in page.navigationOptions)
+                    li {
+                        Link {
+                            attrs {
+                                to = navOpt.destination
+                                smooth = true
+                            }
+                            +navOpt.name
                         }
-                        +navOpt.name
                     }
-                }
+            }
         }
-    }
+    else null

@@ -1,6 +1,6 @@
 package pages.pageutils
 
-data class ImageInfo(
+data class VideoInfo(
     val url: String,
     val sourceURL: String,
     val sourceName: String
