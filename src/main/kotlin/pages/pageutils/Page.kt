@@ -23,6 +23,7 @@ abstract class Page : RComponent<RProps, RState>() {
             css {
                 display = Display.flex
                 flexDirection = FlexDirection.row
+                width = LinearDimension.fillAvailable
                 marginLeft = LinearDimension("1%")
                 marginRight = LinearDimension("1%")
             }
@@ -62,18 +63,27 @@ abstract class Page : RComponent<RProps, RState>() {
             }
     }
 
-    fun RBuilder.addSourceInfo(url: String, name: String): ReactElement =
+    fun RBuilder.sources(block: RBuilder.() -> Unit) =
+        styledDiv {
+            css {
+                width = LinearDimension.fillAvailable
+            }
+            block()
+        }
+
+    fun RBuilder.addSourceInfo(source: SourceInfo): ReactElement =
         styledP {
             css {
                 width = LinearDimension.fillAvailable
                 color = Color("#6c757d")
+                marginBottom = LinearDimension("0")
             }
             +"Source: "
             a {
                 attrs {
-                    href = url
+                    href = source.url
                 }
-                +name
+                +source.name
             }
         }
 
@@ -91,7 +101,7 @@ abstract class Page : RComponent<RProps, RState>() {
                     src = imageInfo.url
                 }
             }
-            addSourceInfo(imageInfo.sourceURL, imageInfo.sourceName)
+            addSourceInfo(imageInfo.sourceInfo)
         }
 
     fun RBuilder.addVideo(videoInfo: VideoInfo): ReactElement =
@@ -104,6 +114,6 @@ abstract class Page : RComponent<RProps, RState>() {
                 attrs.url = videoInfo.url
                 attrs.controls = true
             }
-            addSourceInfo(videoInfo.sourceURL, videoInfo.sourceName)
+            addSourceInfo(videoInfo.sourceInfo)
         }
 }

@@ -46,6 +46,7 @@ class App : RComponent<RProps, AppState>() {
             styledDiv {
                 css {
                     display = Display.block
+                    width = LinearDimension("100%")
                 }
                 child(page::class) {}
             }

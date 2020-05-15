@@ -6,7 +6,7 @@ import imports.DropdownItem
 import imports.Link
 import kotlinx.css.*
 import kotlinx.html.js.onClickFunction
-import pages.Home
+import pageList
 import react.RBuilder
 import react.ReactElement
 import react.dom.button
@@ -16,24 +16,37 @@ import react.setState
 import styled.css
 import styled.styledDiv
 
-private fun RBuilder.navBarDropdown(pageGroup: PageGroup, app: App): ReactElement =
-    DropdownButton {
+//private fun RBuilder.navBarDropdown(pageGroup: PageGroup, app: App): ReactElement =
+//    DropdownButton {
+//        attrs {
+//            title = pageGroup.toString()
+//        }
+//        for (subPage in pageGroup.pages) {
+//            DropdownItem {
+//                attrs {
+//                    `as` = "button"
+//                    onClick = {
+//                        app.setState {
+//                            page = subPage
+//                        }
+//                    }
+//                }
+//                +subPage.title
+//            }
+//        }
+//    }
+
+private fun RBuilder.navBarButton(linkedPage: Page, app: App): ReactElement =
+    button {
+        attrs["class"] = "btn btn-primary"
         attrs {
-            title = pageGroup.toString()
-        }
-        for (subPage in pageGroup.pages) {
-            DropdownItem {
-                attrs {
-                    `as` = "button"
-                    onClick = {
-                        app.setState {
-                            page = subPage
-                        }
-                    }
+            onClickFunction = {
+                app.setState {
+                    page = linkedPage
                 }
-                +subPage.title
             }
         }
+        +linkedPage.title
     }
 
 fun RBuilder.addTopNavigation(app: App): ReactElement =
@@ -44,19 +57,8 @@ fun RBuilder.addTopNavigation(app: App): ReactElement =
             backgroundColor = Color("#007bff")
         }
 
-        button {
-            attrs["class"] = "btn btn-primary"
-            attrs {
-                onClickFunction = {
-                    app.setState {
-                        page = Home
-                    }
-                }
-            }
-            +Home.title
-        }
-        for (group in PageGroup.values())
-            navBarDropdown(group, app)
+        for (page in pageList)
+            navBarButton(page, app)
     }
 
 fun RBuilder.addSideNavigation(page: Page): ReactElement? =
